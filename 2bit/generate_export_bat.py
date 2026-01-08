@@ -3,8 +3,8 @@ import os
 # --- CONFIGURATION ---
 # Change these variables to switch between Windows Auth (-E) and SQL Auth (-U/-P)
 CONFIG = {
-    "SERVER": r"DESKTOP-BNR4IKC\DUEBIT",
-    "DATABASE": "DD_3DSRLUNIONE",
+    "SERVER": r"192.168.1.148\duebit",
+    "DATABASE": "DD_DUE",
     "USE_WINDOWS_AUTH": True,  # Set to False to use Username/Password
     "USERNAME": "sa",
     "PASSWORD": "YourPasswordHere",
@@ -13,14 +13,14 @@ CONFIG = {
 
 # List of queries and their respective output filenames
 queries = [
-    ("SELECT idarticolo, REPLACE(REPLACE(Descrizione, CHAR(13), ''), CHAR(10), ''), CodiceIva, idFamiglia FROM dbo.TABARTICOLI", "TABARTICOLI.csv"),
+    ("SELECT idarticolo, REPLACE(REPLACE(REPLACE(REPLACE(Descrizione, CHAR(13), ''), CHAR(10), ''), '|', ' '), '\', ' ') as Descrizione, CodiceIva, idFamiglia FROM dbo.TABARTICOLI", "TABARTICOLI.csv"),
     ("SELECT [IdArticolo], [IdFornitore], [CodiceArticoloFornitore], [Predefinito] FROM dbo.TabArticoliFornitori", "TabArticoliFornitori.csv"),
     ("SELECT [IdFamiglia], [NomeFamiglia], [AliquotaIva], [CodiceIva] FROM dbo.TabFamiglie", "TabFamiglie.csv"),
     ("SELECT idarticolo, prezzovendita, sconto1, idlistino FROM dbo.tabPrezziVendita", "tabPrezziVendita.csv"),
     ("SELECT Imponibile, Sconto1, Sconto2, Sconto3, Sconto4, PrezzoAcquisto, codicearticolofornitore, idfornitore FROM dbo.TabPrezziAcquisto", "TabPrezziAcquisto.csv"),
     ("SELECT idarticolo, barcode FROM dbo.tabBarcode", "tabBarcode.csv"),
-    ("SELECT idcliente, ragionesociale1, indirizzo, cap, paese, provincia, telefono, email, partitaiva, codicefiscale, emailpec, codiceunivocoufficio, ragionesociale2 FROM dbo.tabClienti", "tabClienti.csv"),
-    ("SELECT [ID], [idMagazzino], [idCassa], [idTessera], [idCliente], [idTipoTransazione], [DataTransazione], [ImportoTransazione], [Punti_Conteggio], [Punti_Valore], [ProgressivoPunti_Conteggio], [ProgressivoPunti_Valore], [UtenteUltimoAccesso], [idArticolo], [Descrizione], [NumeroScontrino] FROM [dbo].[tabFidelity_Transazioni]", "tabFidelity_Transazioni.csv"),
+    ("SELECT idcliente, REPLACE(REPLACE(REPLACE(REPLACE(ragionesociale1, CHAR(13), ''), CHAR(10), ''), '|', ' '), '\', ' ') as ragionesociale1, indirizzo, cap, paese, provincia, telefono, email, partitaiva, codicefiscale, emailpec, codiceunivocoufficio, REPLACE(REPLACE(REPLACE(REPLACE(ragionesociale2, CHAR(13), ''), CHAR(10), ''), '|', ' '), '\', ' ') as ragionesociale2 FROM dbo.tabClienti", "tabClienti.csv"),
+    ("SELECT [ID], [idMagazzino], [idCassa], [idTessera], [idCliente], [idTipoTransazione], [ImportoTransazione], [Punti_Conteggio], [Punti_Valore], [ProgressivoPunti_Conteggio], [ProgressivoPunti_Valore], [UtenteUltimoAccesso], [idArticolo], [Descrizione], [NumeroScontrino] FROM [dbo].[tabFidelity_Transazioni]", "tabFidelity_Transazioni.csv"),
     ("SELECT [ID], [idModelloTessera], [idCliente], [CodiceTessera], [TotalePunti], [TotaleImporto], [Attiva] FROM [dbo].[tabFidelity_Tessere]", "tabFidelity_Tessere.csv")
 ]
 
