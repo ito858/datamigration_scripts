@@ -1,0 +1,9 @@
+CREATE FUNCTION dbo.CleanStr (@str NVARCHAR(MAX))
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+    IF @str IS NULL RETURN NULL;
+    SET @str = REPLACE(REPLACE(REPLACE(REPLACE(@str, CHAR(13), ''), CHAR(10), ''), '|', ' '), '\', ' ');
+    RETURN @str;
+END;
+GO
